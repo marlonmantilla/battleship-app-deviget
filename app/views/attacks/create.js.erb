@@ -1,0 +1,11 @@
+var point = $(".enemy-board div[data-row='<%= @coor_x %>'] .point[data-col='<%= @coor_y%>']");
+
+console.log("Attacked <%= @coor_x %> <%= @coor_y %>")
+console.log("Board <%= @attack.user.board.id %> ")
+<% if @attack.user.board.attacked?(@coor_x, @coor_y) %>
+  point.addClass("succeded-attack");
+<% else %>
+  point.addClass("failed-attack");
+<% end %>
+
+point.find("a").remove();

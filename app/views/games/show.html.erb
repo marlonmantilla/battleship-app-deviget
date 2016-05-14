@@ -1,0 +1,87 @@
+<div class="row">
+  
+  <div class="col-xs-12">
+    
+    <h1><%= @player.name %> board</h1>
+    
+    <hr>
+    
+    <% unless @player.ready? %>
+      <h2>Select Ships: </h2>
+
+      <div class="row" id="game-ships">
+        <% Ship.all.each do |ship| %>
+          <div class="col-xs-2">
+            <div class="ship well" data-size="<%= ship.size %>">
+              <%= ship.name %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <hr>
+    
+    <% unless @player.ready? %>
+      <%= link_to "Ready to begin", ready_game_path(@player.id), remote: true, method: :post, class: "btn btn-primary", id: "set-as-ready" %>
+    <% end %>
+
+    <% if @enemy.ready? %>
+      <span class="label label-success">Your enemy is ready!</span>
+    <% else %>
+      <span class="label label-warning">Your enemy is NOT ready!</span>
+    <% end %>
+
+    <hr>
+  
+    <!-- current-player-board -->
+  
+    <div class="player-board">
+      
+      <% Board::VALID_POSITIONS.each do |r| %>
+        
+        <div class="row" data-row="<%= r %>">
+          <!-- Current player board -->
+          <div class="col-xs-6 current-player-board">
+            <div class="row" data-row="<%= r %>">
+              <% (1..10).each do |y| %>
+                <% 
+                  board_class = (@board.ship_positioned?(r, y))? 'ship-ready' : ''
+
+                  board_class = 'mayday-point' if @board.attacked?(r, y)
+                %>
+                <div data-board="<%= @player.board.id %>" class="col-xs-1 point <%= board_class %>" data-row="<%= r %>" data-col="<%= y %>"><%= y %></div>
+              <% end %>
+            </div>
+          </div>
+          <!-- Attack Enemy board -->
+          <div class="col-xs-6 enemy-board">
+            <div class="row" data-row="<%= r %>">
+              <% (1..10).each do |y| %>
+                <% 
+                  attack_class = ""
+                  if @player.attacked?(r, y)
+                    attack_class = (@enemy.board.attacked?(r, y))? 'succeded-attack' : 'failed-attack'
+                  end
+                %>
+                <div class="col-xs-1 point <%= attack_class %>" data-col="<%= y %>">
+                  <% if @player.attacked?(r, y)  %>
+                      
+                  <% else %>
+                    <%= link_to "attack", game_attacks_path(game_id: @player.id, attack: {user_id: @enemy.id, coor_x: r, coor_y: y }), method: :post, remote: true %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+      <% end %>
+
+    </div>
+    <!-- END current-player-board -->
+
+  </div>
+  
+
+</div>

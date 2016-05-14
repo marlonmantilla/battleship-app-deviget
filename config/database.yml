@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  pool: 5
+  timeout: 5000
+  host: localhost
+  port: 5432
+
+development:
+  <<: *default
+  database: battleship_development
+  username:
+  password:
+
+test:
+  <<: *default
+  database: battleship_test
+
+production:
+  <<: *default
+  database: battleship_production

@@ -1,0 +1,30 @@
+.player-board{
+  .point{
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+    height: 50px;
+    text-align: center;
+    &.failed-attack{
+      background: red;
+    }
+    &.succeded-attack{
+      background: green; 
+    }
+    &.mayday-point{
+      background: yellow;
+    }
+  }
+  .ship-ready{
+    background: green;
+  }
+}
+
+#game-ships{
+  .ship{
+    cursor: pointer;
+    &.selected{
+      background: #6666BB;
+      color: white;
+    }
+  }
+}

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  attacker_id: 1
+  user_id: 
+  coor_x: MyString
+  coor_y: MyString
+
+two:
+  attacker_id: 1
+  user_id: 
+  coor_x: MyString
+  coor_y: MyString
