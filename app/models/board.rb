@@ -27,6 +27,13 @@ class Board < ActiveRecord::Base
     end
   end
 
+  def reset_positions!
+    VALID_POSITIONS.each do |p|
+      positions[p] = []
+    end
+    save
+  end
+
   def attacked?(x,y)
     user.attacks.find_by(coor_x: x, coor_y: y) && positions[x].include?(y)
   end

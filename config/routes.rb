@@ -7,6 +7,8 @@ Rails.application.routes.draw do
       post :ready
     end
     resources :attacks
+
+    get :reset, on: :collection
   end
 
   resources :boards, only: [] do
